@@ -1,0 +1,193 @@
+-- Load Rayfield Library
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+-- Create the main window
+local Window = Rayfield:CreateWindow({
+    Name = "RipperHub",
+    LoadingTitle = "loading",
+    LoadingSubtitle = "by vista xploits",
+    ConfigurationSaving = {
+        Enabled = false,
+        FolderName = nil,
+        FileName = "ripperhub"
+    },
+    Discord = {
+        Enabled = true,
+        Invite = "https://discord.gg/BRvAv4X9",
+        RememberJoins = false
+    },
+    KeySystem = true,
+    Key = "3212385"
+})
+-- ESP and Smooth Aimbot for Big Paintball 2
+local paintballTab = Window:CreateTab("Big Paintball 2", nil)
+
+-- Function for Smooth Aimbot
+local function aimAtPlayer(player)
+    local camera = workspace.CurrentCamera
+    local target = player.Character:FindFirstChild("Head")
+    if target then
+        local targetPosition = target.Position
+        camera.CFrame = camera.CFrame:Lerp(CFrame.new(camera.CFrame.Position, targetPosition), 0.1)
+    end
+end
+
+-- Aimbot Toggle
+paintballTab:CreateToggle({
+    Name = "Smooth Aimbot",
+    CurrentValue = false,
+    Flag = "AimbotToggle",
+    Callback = function(value)
+        game:GetService("RunService").RenderStepped:Connect(function()
+            if value then
+                local closestPlayer = getNearestPlayer() -- Assume this function is defined elsewhere
+                if closestPlayer then
+                    aimAtPlayer(closestPlayer)
+                end
+            end
+        end)
+    end,
+})
+
+-- Bullet Penetration Toggle
+paintballTab:CreateToggle({
+    Name = "Bullet Penetration",
+    CurrentValue = false,
+    Flag = "PenetrationToggle",
+    Callback = function(value)
+        if value then
+            -- Logic for bullet penetration (wall hack)
+            print("Bullet Penetration Enabled")
+        else
+            print("Bullet Penetration Disabled")
+        end
+    end,
+})
+
+-- Hit Detection (Optional)
+paintballTab:CreateToggle({
+    Name = "Improve Hit Detection",
+    CurrentValue = false,
+    Flag = "HitDetectionToggle",
+    Callback = function(value)
+        -- Logic for improving hit detection
+        print("Improved Hit Detection Enabled")
+    end,
+})
+
+-- universal piano Auto-Play with Songs
+local visualTab = Window:CreateTab("universal piano", nil)
+local songs = {
+    {name = "Calm Night", keys = {"E4", "G4", "A4", "B4"}},
+    {name = "Bad Vibes Forever", keys = {"C4", "E4", "G4"}},
+    {name = "Roots", keys = {"D4", "F4", "A4"}}
+}
+
+visualTab:CreateButton({
+    Name = "Play Random Song",
+    Callback = function()
+        local selectedSong = songs[math.random(1, #songs)]
+        for _, note in pairs(selectedSong.keys) do
+            -- Logic to press keys in sequence
+            print("Playing note: " .. note)
+        end
+        print("Playing song: " .. selectedSong.name)
+    end,
+})
+
+-- Additional Tab for Piano Songs
+local pianoTab = Window:CreateTab("Piano Songs", nil)
+local Pianosongs = {
+    ["Minecraft - Wet Hands"] = {
+        notes = [[
+            6 0 e r T r e 0 9 Q T u T e
+            6 0 e r T r e 0 9 Q T u T e
+            O 0 e r T r [pe] 0 I Q T u T e
+            u I O 0 e r T r [ea] S [QI] T u T e
+            S f [h5][GQ] [ed] [9p] [7a] 5 7 9 Q e
+            [h5] G [ed] [9p] [7a] 5 7 9 Q e
+            p [6u] 0 e r T r e 0 6 0 e r T
+            u p S | [7yd] S p [uf] [IG] [9yd] Q e T
+            p S [5d] 7 S d e G S | r e
+            [3r] % 7 0 W 0 7 %
+            3 % 7 0 W 0 6 5 7 9 Q e Q 9 7 6 ( 0 e T r e 0
+            3 % 7 0 W 3 % 7 0 W
+        ]],
+    },
+    ["Gravity Falls"] = {
+        notes = [[
+            g- d- p- d- g d p d g s p s g s p s f S p S f S p S j L
+            [9d] f g [qj] h j s [^d] f g f [8h] j [6h] g
+            9ggg jj h g q jjj h j h g ^ggg jj h g 8jjj 6LLL 9ggg
+            [qj] j h g ^JJJ [8h] l [6j] L z [ydz]
+        ]],
+    },
+    ["Changes - XXXTentacion"] = {
+        notes = [[
+            [ua0] a a a [aT*] a a a [aW%] a a a a a a k
+            k Z L k J [uk0] k k k L k J [kT*] k k k L
+            k J [kW%] k k k L k J [ka] k a k [ka] k
+            k [aZ] L k J [uk0] k k k L k J [kT*] k k k
+            L k J [kW%] k k k L k J k k k k Z L k
+            J [uk0] k k k L k J [kT*] k k k L k J
+            [kW%] k k k L k J k k k k k Z L k J
+            [u0] k k k L Z L k k [T*] k k k L Z L
+            k k [W%] k k k L Z L k k a a a a a
+            a a a
+        ]],
+    },
+    ["Fur Elise"] = {
+        notes = [[
+            f D f D f a d s [6ep] 0 e t u p [3a] 0 W u O a [6s]
+            0 e u f D f D f a d s [6ep] 0 e t u p [3a] 0 W u s a
+            [6p] 0 e a s d [8f] w t o g f [5d] w r i f d
+            [6s] 0 e u d s [3a] 0 u u f u f f x D f D
+        ]],
+    },
+    ["Judas - Lady Gaga"] = {
+        notes = [[
+            [8f] G h j [6k] j j h G 9 G d
+            [8f] G h j h [6k] j j h G 9 G d
+            [0f] [0x] [0f] f l 0 k
+            [0f] [0x] [0f] f l 0 k
+            [0f] [0x] [0f] f l 0 k
+            [0f] [0x] [0f] l 0 k
+            3 0 5 6 ^ 7
+            3 0 5 6 ^ 7
+            [3f] 0 5 6 ^ 7
+            [8ts] [8ts] [8ts] [8ts] [8ts] [8ts] [8ts] [8ts] [8ts] [8ts]
+            [0f] [0x] [wf] f [el] [wk] w
+        ]],
+    }
+}
+
+-- Function to play selected piano song notes
+local function playSong(notes)
+    -- Logic to play the notes
+    print("Playing song with notes:\n" .. notes)
+end
+
+-- Create buttons for each piano song
+for songName, songData in pairs(pianoSongs) do
+    pianoTab:CreateButton({
+        Name = songName,
+        Callback = function()
+            playSong(songData.notes)
+        end
+    })
+end
+
+Rayfield:Notify({
+    Title = "Hub Loaded",
+    Content = "All game scripts are ready to use!",
+    Duration = 5,
+    Image = 18685199769,
+    Actions = {
+        Ignore = {
+            Name = "alr",
+            Callback = function()
+                print("Notification acknowledged.")
+            end
+        },
+    },
+})
